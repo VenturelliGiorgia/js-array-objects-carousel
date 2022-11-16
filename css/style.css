@@ -9,7 +9,7 @@ img {
 .slider-container {
     position: relative;
     width: 100%;
-    aspect-ratio: 22/8;
+    aspect-ratio: 17/8;
 }
 
 .slider-btn {
