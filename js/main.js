@@ -47,8 +47,23 @@ images.forEach(function (element) {
     const img = document.createElement("img");
     img.setAttribute("src", element.image);
     slider.append(img);
+    img.classList.add("d-none");
     console.log(element.image);
-    return element;
+});
+
+images.forEach(function (element) {
+
+    const title = element.title;
+    const p = document.createElement("p");
+    p.append(title)
+    slider.append(p);
+    p.classList.add("position-title");
+
+    const textEl = element.text;
+    const text = document.createElement("p");
+    text.append(textEl)
+    slider.append(text);
+    text.classList.add("position-text");
 });
 
 
@@ -64,3 +79,36 @@ buttonPrev.classList.add("slider-btn-prev");
 const btnNext = document.querySelector(".slider-btn-next");
 const btnPrev = document.querySelector(".slider-btn-prev");
 let currentImgIndex = 0;
+
+btnNext.addEventListener("click", function () {
+    console.log("Next  btn click");
+
+    // prendo immagine corrente e la nascondo così da poter aggiornare il contatore e visualizzare la prossima immagine
+    const oldImg = document.querySelector(`.slider-container :nth-child(${currentImgIndex + 1})`);
+    oldImg.classList.add("active");
+
+    // incrementato il contatore
+    currentImgIndex++;
+
+    const ultimoIndiceDisponibile = images.length - 1;
+
+    //se l'indice va oltre l'ultima immagine disponibile vado all'ultimo elemento visualizzabile disponibile
+    if (currentImgIndex > ultimoIndiceDisponibile) {
+        currentImgIndex = ultimoIndiceDisponibile;
+    }
+});
+
+btnPrev.addEventListener("click", function () {
+    console.log("Prev btn click");
+    // prendo immagine corrente e la nascondo così da poter aggiornare il contatore e visualizzare l'immagine precedente
+    const oldImg = document.querySelector(`.slider-container :nth-child(${currentImgIndex + 1})`);
+    oldImg.classList.remove("active");
+    // decremento il contatore
+    currentImgIndex--;
+
+    //se l'utente proverà ad andare prima della prima immagine non andrà in negativo
+    if (currentImgIndex < 0) {
+        currentImgIndex = 0;
+        oldImg.classList.add("active");
+    }
+});
